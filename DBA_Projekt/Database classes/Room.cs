@@ -31,7 +31,7 @@ namespace DBA_Projekt
         #endregion
 
         #region IDbItem interface
-        public new bool Equals(object other)
+        public override bool Equals(object other)
         {
             if (other is null) return false;
             if (other.GetType() != GetType()) return false;

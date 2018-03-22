@@ -16,12 +16,12 @@ namespace DBA_Projekt
         public static Teacher Parse(string teacherString)
         {
             var info = teacherString.Split(' ');
-            if (info.Length == 2) return null;
+            if (info.Length < 2) return null;
 
             return new Teacher
             {
                 LastName = info[0].Trim(),
-                FirstName = info[1].Trim()
+                FirstName = string.Join(" ", info, 1, info.Length - 1).Trim()
             };
         }
 
@@ -29,11 +29,11 @@ namespace DBA_Projekt
         #endregion
 
         #region IDbItem interface
-        public new bool Equals(object other)
+        public override bool Equals(object other)
         {
             if (other is null) return false;
             if (other.GetType() != GetType()) return false;
-            return base.Equals((Teacher) other);
+            return Equals((Teacher) other);
         }
 
         public bool Equals(Teacher other)
