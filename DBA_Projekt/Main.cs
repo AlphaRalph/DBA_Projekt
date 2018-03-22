@@ -3,7 +3,12 @@
 namespace DBA_Projekt
 {
     /// <summary>
-    /// Kommentar, oidaaaa.
+    /// Credentials for vmware 
+    ///     - name: bitnami
+    ///     - login: bitnami1
+    /// Credentials for phpmyadmin
+    ///     - name: fhooe
+    ///     - login: bitnami1
     /// </summary>
     public partial class Main : Form
     {
