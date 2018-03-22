@@ -12,6 +12,9 @@ namespace DBA_Projekt
 {
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// Form description.
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
