@@ -1,6 +1,6 @@
 ﻿namespace DBA_Projekt
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// Erforderliche Designervariable.
