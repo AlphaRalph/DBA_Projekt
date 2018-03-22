@@ -56,13 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Appointment.cs" />
-    <Compile Include="Database\DbItemCollection.cs" />
-    <Compile Include="Database\CsvHelper.cs" />
-    <Compile Include="Database\IDbItem.cs" />
-    <Compile Include="Database\StudyProgram.cs" />
-    <Compile Include="Database\Room.cs" />
-    <Compile Include="Database\Teacher.cs" />
+    <Compile Include="Database classes\Appointment.cs" />
+    <Compile Include="Database classes\DbItemCollection.cs" />
+    <Compile Include="CsvHelper.cs" />
+    <Compile Include="Database classes\IDbItem.cs" />
+    <Compile Include="Database classes\StudyProgram.cs" />
+    <Compile Include="Database classes\Room.cs" />
+    <Compile Include="Database classes\Teacher.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

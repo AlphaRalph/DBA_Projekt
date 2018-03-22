@@ -13,11 +13,11 @@ namespace DBA_Projekt
         public string Type { get; set; }
         public string Identification { get; set; }
         public StudyProgram StudyProgram { get; set; }
-        public Room Room { get; set; }
-        public Teacher Teacher { get; set; }
+        public Room[] Rooms { get; set; }
+        public Teacher[] Teachers { get; set; }
         #endregion
 
-        #region IEquals interface
+        #region IDbItem interface
         public new bool Equals(object other)
         {
             if (other is null) return false;
@@ -35,8 +35,8 @@ namespace DBA_Projekt
                 && Ending == other.Ending
                 && string.Equals(Type, other.Type)
                 && StudyProgram == other.StudyProgram
-                && Room == other.Room
-                && Teacher == other.Teacher;
+                && Rooms == other.Rooms
+                && Teachers == other.Teachers;
         }
         #endregion
     }

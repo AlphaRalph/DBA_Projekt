@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 
 namespace DBA_Projekt
 {
@@ -26,9 +26,11 @@ namespace DBA_Projekt
                 RoomName = info[2].Trim()
             };
         }
+
+        public static Room[] Parse(string[] roomStrings) => roomStrings.Select(Parse).Where(room => room != null).ToArray();
         #endregion
 
-        #region IEqals interface
+        #region IDbItem interface
         public new bool Equals(object other)
         {
             if (other is null) return false;
