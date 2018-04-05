@@ -31,5 +31,18 @@ namespace DBA_Projekt
         //BindingSource sourc = new BindeingSource();
         //sourc.DataSource = table;
         //dataGridView.DataSource = bindingSource;
+
+
+
+
+
+
+        #region events
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            CsvHelper.ReadCsv("../../LVA.csv", 1, out var appointments, out var programs, out var rooms, out var teachers);
+
+        }
+        #endregion
     }
 }
