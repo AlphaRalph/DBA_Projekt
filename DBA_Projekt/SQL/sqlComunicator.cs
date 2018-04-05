@@ -13,15 +13,14 @@ namespace DBA_Projekt.SQL
     {
         private MySqlConnection connection;
 
-        public sqlComunicator()
+        public sqlComunicator(string serverIPAddress,string database, string uid, string password)
         {
-
+            EstablishConnection(serverIPAddress, database, uid, password);
         }
 
-        public void EstablishConnection()
+        public void EstablishConnection(string address, string database, string uid, string password)
         {
-            string myConnectionString = "SERVER=127.0.0.1;" + "DATABASE= fhooe;" + "UID=fhooe;" + "PASSWORD=1234;";
-
+            string myConnectionString = "SERVER="+address+";" + "DATABASE="+database+";" + "UID="+uid+";" + "PASSWORD="+password+";";
             connection = new MySqlConnection(myConnectionString);
         }
 
@@ -55,12 +54,17 @@ namespace DBA_Projekt.SQL
 
         public DataSet Get()
         {
+            //DataTable table = new DataTable();
+            //myDataAdapter.Fill(table);
+            //BindingSource sourc = new BindingSource();
+            //sourc.DataSource = table;
+            //dataGridView.DataSource = bindingSource;
+
             MySqlCommand command = connection.CreateCommand();
             DataSet set = new DataSet();
             MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command.CommandText, connection);
             dataAdapter.Fill(set);
             return set;
         }
-
     }
 }
