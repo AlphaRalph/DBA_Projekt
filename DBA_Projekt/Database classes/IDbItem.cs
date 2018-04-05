@@ -1,10 +1,9 @@
-﻿namespace DBA_Projekt
+﻿using System;
+
+namespace DBA_Projekt
 {
-    public interface IDbItem<in T>
+    public interface IDbItem<T> : IEquatable<T>
     {
         int Id { get; set; }
-
-        bool Equals(object other);
-        bool Equals(T other);
     }
 }

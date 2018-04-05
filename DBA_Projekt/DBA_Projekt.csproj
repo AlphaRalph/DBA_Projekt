@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Database classes\Appointment.cs" />
     <Compile Include="Database classes\DbItemCollection.cs" />
-    <Compile Include="CsvHelper.cs" />
+    <Compile Include="Database classes\CsvHelper.cs" />
     <Compile Include="Database classes\IDbItem.cs" />
     <Compile Include="Database classes\StudyProgram.cs" />
     <Compile Include="Database classes\Room.cs" />

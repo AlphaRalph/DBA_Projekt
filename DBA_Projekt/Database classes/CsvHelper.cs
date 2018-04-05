@@ -28,16 +28,18 @@ namespace DBA_Projekt
                 var rooms = Room.Parse(items[10].Split(','));
                 var teachers = Teacher.Parse(items[13].Split(','));
 
+                if (studyProgram == null && rooms.Length == 0 && teachers.Length == 0) continue;
+
                 var appointment = new Appointment
                 {
                     StudyProgram = studyProgram,
                     SemesterName = items[3],
-                    SemesterNumber = Convert.ToInt32(items[3]),
-                    Beginning = DateTime.Parse(items[6] + " " + items[7]),
-                    Ending = DateTime.Parse(items[6] + " " + items[8]),
-                    Rooms = rooms,
+                    SemesterNumber = IntParser(items[4]),
+                    Beginning = DateTime.Parse(items[6].Split(',')[1].Trim() + " " + items[7]),
+                    Ending = DateTime.Parse(items[6].Split(',')[1].Trim() + " " + items[8]),
+                    Rooms = rooms.Length > 0 ? rooms : null,
                     Identification = items[12],
-                    Teachers = teachers,
+                    Teachers = teachers.Length > 0 ? teachers : null,
                     Type = items[15]
                 };
 
@@ -47,5 +49,7 @@ namespace DBA_Projekt
                 appointmentCollection.Add(appointment);
             }
         }
+        
+        private static int? IntParser(string input) => int.TryParse(input, out var res) ? (int?) res : null;
     }
 }

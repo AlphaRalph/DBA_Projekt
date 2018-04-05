@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace DBA_Projekt
 {
@@ -41,7 +40,7 @@ namespace DBA_Projekt
         #endregion
 
         #region IDbItem interface
-        public new bool Equals(object other)
+        public override bool Equals(object other)
         {
             if (other is null) return false;
             if (other.GetType() != GetType()) return false;
@@ -53,7 +52,7 @@ namespace DBA_Projekt
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return string.Equals(ProgramName, other.ProgramName)
-                && Equals(ProgramNumber, other.ProgramNumber)
+                && ProgramNumber == other.ProgramNumber
                 && string.Equals(ProgramGraduate, other.ProgramGraduate)
                 && string.Equals(ProgramType, other.ProgramType);
         }
