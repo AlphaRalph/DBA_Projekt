@@ -20,11 +20,11 @@ namespace DBA_Projekt.SQL
 
         public void EstablishConnection(string address, string database, string uid, string password)
         {
-            string myConnectionString = "SERVER="+address+";" + "DATABASE="+database+";" + "UID="+uid+";" + "PASSWORD="+password+";";
+            string myConnectionString = "SERVER="+address+";" + "DATABASE="+database+";" + "UID="+uid+";" + "PASSWORD="+password;
             connection = new MySqlConnection(myConnectionString);
         }
 
-        public void executeSqlQuery(string sqlCommand)
+        public string executeSqlQuery(string sqlCommand)
         {
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
@@ -32,6 +32,7 @@ namespace DBA_Projekt.SQL
 
             MySqlDataReader Reader;
             Reader = command.ExecuteReader();
+            string output = string.Empty;
             while (Reader.Read())
             {
                 string row = "";
@@ -39,14 +40,26 @@ namespace DBA_Projekt.SQL
                 {
                     row += Reader.GetValue(i).ToString() + ", ";
                 }
-                connection.Close();
+                output += row + "\r\n";
             }
+            connection.Close();
+            return output.Substring(0, output.Length - 4);
         }
 
-        public void Insert(string intoTable, string intoColumn, string value)
+        public void Insert(string intoTable, string[] columns, string[] values)
         {
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO " + intoTable + " (" + intoColumn + ") VALUES ('" + value + "')";   //"INSERT INTO Person (Vorname) VALUES ('tom')"; 
+            string insertString = string.Empty;
+            string targetColumns = string.Empty;
+            foreach (var item in columns)
+            {
+                targetColumns += item + ",";
+            }
+            foreach (var item in values)
+            {
+                insertString += "'"+ item + "',";
+            }
+            command.CommandText = "INSERT INTO " + intoTable + " ( " + targetColumns.Substring(0,targetColumns.Length-1) +" )" +  " VALUES ( " + insertString.Substring(0,insertString.Length-1) + " );"; 
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
@@ -65,6 +78,62 @@ namespace DBA_Projekt.SQL
             MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command.CommandText, connection);
             dataAdapter.Fill(set);
             return set;
+        }
+
+        public bool TryRemove(string table, string[] lookForCloumns, string[] lookForAttributes)
+        {
+            try
+            {
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = "DELETE FROM " + table + " WHERE " + MakeConditions(lookForCloumns, lookForAttributes, "AND") + ";";
+                connection.Open();
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public bool TryEdit(string table, string[] editColumns, string[] oldValues, string[] newValues)
+        {
+            try
+            {
+                MySqlCommand command = connection.CreateCommand();
+                string setValues = string.Empty;
+                for (int i = 0; i < editColumns.Length; i++)
+                {
+                    setValues += editColumns[i] + " = '" + newValues[i] + "' ,";
+                }
+                command.CommandText = "UPDATE " + table + " SET " + setValues.Substring(0,setValues.Length-1) + " WHERE " + MakeConditions(editColumns, oldValues, "AND") + ";";
+                connection.Open();
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        private static string MakeConditions(string[] lookForCloumns, string[] lookForAttributes, string connectionWord)
+        {
+            string conditions = string.Empty;
+            for (int i = 0; i < lookForCloumns.Length; i++)
+            {
+                conditions += lookForCloumns[i] + " = '" + lookForAttributes[i] + "' ";
+                if (i < lookForCloumns.Length - 1) conditions += connectionWord + " ";
+            }
+            return conditions;
         }
     }
 }

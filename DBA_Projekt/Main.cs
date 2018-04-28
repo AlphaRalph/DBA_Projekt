@@ -44,7 +44,11 @@ namespace DBA_Projekt
         {
             //CsvHelper.ReadCsv("../../LVA.csv", 1, out var appointments, out var programs, out var rooms, out var teachers);
             sqlComunicator com = new sqlComunicator("192.168.142.128", "fhooe", "fhooe", "bitnami1");
-            com.executeSqlQuery("");
+            string query = com.executeSqlQuery("SELECT * FROM person");
+            com.Insert("person", new string[] { "Vorname, Nachname, SVNR" }, new string[] { "Albert", "Hofer", "9723" });
+            com.TryEdit("person", new string[] { "Vorname", "Nachname" }, new string[] { "Albert", "Hofer" }, new string[] { "Kunibert", "Hofer" });
+            com.TryRemove("person", new string[] { "Vorname", "Nachname"}, new string[] { "Kunibert", "Hofer"});
+            
         }
         #endregion
     }
