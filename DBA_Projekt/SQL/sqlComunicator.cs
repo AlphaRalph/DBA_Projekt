@@ -51,21 +51,33 @@ namespace DBA_Projekt.SQL
             MySqlCommand command = connection.CreateCommand();
             string insertString = string.Empty;
             string targetColumns = string.Empty;
-            foreach (var item in columns)
+            for (int i = 0; i < columns.Length; i++)
             {
-                targetColumns += item + ",";
+                if (ReferenceEquals(values[i], null) || values[i] == "") continue;
+                targetColumns += columns[i] + ",";
             }
             foreach (var item in values)
             {
-                insertString += "'"+ item + "',";
+                if (ReferenceEquals(item, null) || item == "") continue;
+                insertString += "'" + item.Replace("'", "") + "',";
             }
-            command.CommandText = "INSERT INTO " + intoTable + " ( " + targetColumns.Substring(0,targetColumns.Length-1) +" )" +  " VALUES ( " + insertString.Substring(0,insertString.Length-1) + " );"; 
             connection.Open();
-            command.ExecuteNonQuery();
+            MySqlCommand selectCommand = connection.CreateCommand();
+            selectCommand.CommandText = "SELECT " + targetColumns.Substring(0,targetColumns.Length-1) + " FROM " + intoTable + " WHERE " + MakeConditions(columns, values, "AND");
+
+            MySqlDataReader Reader;
+            Reader = selectCommand.ExecuteReader();
+
+            if (!Reader.HasRows)
+            {
+                Reader.Close();
+                command.CommandText = "INSERT INTO " + intoTable + " ( " + targetColumns.Substring(0, targetColumns.Length - 1) + " )" + " VALUES ( " + insertString.Substring(0, insertString.Length - 1) + " );";
+                command.ExecuteNonQuery();
+            }
             connection.Close();
         }
 
-        public DataSet Get()
+        public DataSet Get(string table, string[] lookForColumns, string[] lookForAttributes)
         {
             //DataTable table = new DataTable();
             //myDataAdapter.Fill(table);
@@ -75,6 +87,13 @@ namespace DBA_Projekt.SQL
 
             MySqlCommand command = connection.CreateCommand();
             DataSet set = new DataSet();
+            string targetColumns = string.Empty;
+            for (int i = 0; i < lookForColumns.Length; i++)
+            {
+                if (ReferenceEquals(lookForAttributes[i], null) || lookForAttributes[i] == "") continue;
+                targetColumns += lookForColumns[i] + ",";
+            }
+            command.CommandText = "SELECT " + targetColumns.Substring(0, targetColumns.Length - 1) + " FROM " + table + " WHERE " + MakeConditions(lookForColumns, lookForAttributes, "AND");
             MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command.CommandText, connection);
             dataAdapter.Fill(set);
             return set;
@@ -130,8 +149,11 @@ namespace DBA_Projekt.SQL
             string conditions = string.Empty;
             for (int i = 0; i < lookForCloumns.Length; i++)
             {
-                conditions += lookForCloumns[i] + " = '" + lookForAttributes[i] + "' ";
-                if (i < lookForCloumns.Length - 1) conditions += connectionWord + " ";
+                if (!ReferenceEquals(lookForAttributes[i], null))
+                {
+                    conditions += lookForCloumns[i] + " = '" + lookForAttributes[i].Replace("'", "") + "' ";
+                    if (i < lookForCloumns.Length - 1) conditions += connectionWord + " ";
+                }
             }
             return conditions;
         }
