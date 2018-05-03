@@ -43,6 +43,7 @@ namespace DBA_Projekt.SQL
                 output += row + "\r\n";
             }
             connection.Close();
+            if (!Reader.HasRows) return "";
             return output.Substring(0, output.Length - 4);
         }
 
@@ -144,7 +145,7 @@ namespace DBA_Projekt.SQL
             }
         }
 
-        private static string MakeConditions(string[] lookForCloumns, string[] lookForAttributes, string connectionWord)
+        public static string MakeConditions(string[] lookForCloumns, string[] lookForAttributes, string connectionWord)
         {
             string conditions = string.Empty;
             for (int i = 0; i < lookForCloumns.Length; i++)
