@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using DBA_Projekt.SQL;
 using System.Data;
+using System.Collections.Generic;
 
 namespace DBA_Projekt
 {
@@ -16,6 +17,8 @@ namespace DBA_Projekt
     /// </summary>
     public partial class Main : Form
     {
+        // Establish DB communication (once per Program)
+        sqlComunicator fhooeComunicator = new sqlComunicator("192.168.142.128", "fhooe", "fhooe", "bitnami1");
 
         //public Main()
         //{
@@ -43,9 +46,6 @@ namespace DBA_Projekt
         #region events
         private void button1_Click(object sender, System.EventArgs e)
         {
-            // Establish DB communication (once per Program)
-            sqlComunicator fhooeComunicator = new sqlComunicator("192.168.142.128", "fhooe", "fhooe", "bitnami1");
-            
             // Load LVA List from File
             CsvHelper.ReadCsv("../../LVA.csv", 1, out var appointments, out var programs, out var rooms, out var teachers);
 
@@ -117,5 +117,19 @@ namespace DBA_Projekt
             
         }
         #endregion
+
+        private void button2_Click(object sender, System.EventArgs e)
+        {
+            string profs = string.Empty;
+            string profLastName = "Zauner";
+            profs = fhooeComunicator.executeSqlQuery("SELECT * FROM teacher WHERE " + sqlComunicator.MakeConditions(new string[] { "lastName" }, new string[] { profLastName }, "AND"));
+            MessageBox.Show(profs);
+        }
+
+        private void button3_Click(object sender, System.EventArgs e)
+        {
+            string profLastName = "Zauner";
+            string appoints = fhooeComunicator.executeSqlQuery("JOIN ");
+        }
     }
 }
