@@ -43,8 +43,8 @@ namespace DBA_Projekt.SQL
                 output += row + "\r\n";
             }
             connection.Close();
-            if (!Reader.HasRows) return "";
-            return output.Substring(0, output.Length - 4);
+            if(output.Length > 4) return output.Substring(0, output.Length - 4);
+            return "";
         }
 
         public void Insert(string intoTable, string[] columns, string[] values)

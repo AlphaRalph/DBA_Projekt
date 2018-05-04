@@ -67,23 +67,41 @@ namespace DBA_Projekt
             foreach(var appointment in appointments)
             {
                 if (string.IsNullOrWhiteSpace(appointment.Identification)||string.IsNullOrWhiteSpace(appointment.SemesterName)|| string.IsNullOrWhiteSpace(appointment.Type)) continue;
-                string[] columns = new string[] { "semesterNumber", "semesterName", "beginning", "ending", "type", "identification", "teacher", "room", "studyProgram" };
+                string[] columns = new string[] { "semesterNumber",
+                                                    "semesterName",
+                                                        "beginning",
+                                                           "ending",
+                                                             "type",
+                                                   "identification",
+                                                          "teacher",
+                                                             "room",
+                                                     "studyProgram"};
 
                 if (appointment.Teachers == null || appointment.Teachers.Length < 1) continue;
-                string teacherID = fhooeComunicator.executeSqlQuery("SELECT ID FROM teacher WHERE " + sqlComunicator.MakeConditions(new string[] { "firstName", "lastName" }, new string[] { appointment.Teachers[0].FirstName, appointment.Teachers[0].LastName }, "AND"));
+                string teacherID = fhooeComunicator.executeSqlQuery("SELECT ID FROM `teacher` WHERE " + sqlComunicator.MakeConditions(new string[] { "firstName", "lastName" }, new string[] { appointment.Teachers[0].FirstName, appointment.Teachers[0].LastName }, "AND"));
 
                 if (appointment.Rooms == null || appointment.Rooms.Length < 1) continue;
-                string roomID = fhooeComunicator.executeSqlQuery("SELECT ID FROM room WHERE " + sqlComunicator.MakeConditions(new string[] { "building", "type", "roomName" }, new string[] { appointment.Rooms[0].Building, appointment.Rooms[0].RoomName, appointment.Rooms[0].Type }, "AND"));
+                string roomID = fhooeComunicator.executeSqlQuery("SELECT ID FROM room WHERE " + sqlComunicator.MakeConditions(new string[] { "building", "type", "roomName" }, new string[] { appointment.Rooms[0].Building, appointment.Rooms[0].Type, appointment.Rooms[0].RoomName }, "AND"));
+
+                if (appointment.StudyProgram == null) continue;
+                string studyProgramID = fhooeComunicator.executeSqlQuery("SELECT ID FROM studyprogram WHERE " + sqlComunicator.MakeConditions(new string[] { "programName", "programNumber", "programGraduate", "programType" }, new string[] { appointment.StudyProgram.ProgramName, appointment.StudyProgram.ProgramNumber.ToString(), appointment.StudyProgram.ProgramGraduate, appointment.StudyProgram.ProgramType },"AND"));
 
                 string[] values = new string[] {appointment.SemesterNumber.ToString(),
                                                 appointment.SemesterName,
-                                                appointment.Beginning.ToString(),
-                                                appointment.Ending.ToString(),
+                                                appointment.Beginning.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+                                                appointment.Ending.Value.ToString("yyyy-MM-dd HH:mm:ss"),
                                                 appointment.Type,
                                                 appointment.Identification,
                                                 teacherID,
-                                                roomID};
+                                                roomID,
+                                                studyProgramID};
 
+                bool validValues = true;
+                foreach (var item in values)
+                {
+                    if(item == "") { validValues = false; break; }
+                }
+                if (!validValues) continue;
                 fhooeComunicator.Insert("appointment",columns , values);
             }
 
