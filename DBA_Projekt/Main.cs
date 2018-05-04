@@ -128,8 +128,11 @@ namespace DBA_Projekt
 
         private void button3_Click(object sender, System.EventArgs e)
         {
+            string profFirstName = "Gerald";
             string profLastName = "Zauner";
-            string appoints = fhooeComunicator.executeSqlQuery("JOIN ");
+            string appoints = fhooeComunicator.executeSqlQuery("SELECT * FROM fhooe.appointment INNER JOIN teacher ON appointment.teacher WHERE " + sqlComunicator.MakeConditions(new string[] { "teacher.firstName", "teacher.lastName" }, new string[] { profFirstName, profLastName }, "AND"));
+            if (appoints.Length > 500) MessageBox.Show(appoints.Substring(0, appoints.IndexOf("\r\n", 500)) + "...");
+            else MessageBox.Show(appoints);
         }
     }
 }
