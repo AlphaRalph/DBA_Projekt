@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Database Name="fhooe" EntityNamespace="FhooeContext" ContextNamespace="FhooeContext" Class="FhooeDataContext" xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ed:Guid="90bd3d93-69a9-4294-ba8e-555c931bad6d" Provider="Devart.Data.MySql.Linq.Provider.MySqlDataProvider, Devart.Data.MySql.Linq" Extended="true" xmlns="http://schemas.devart.com/linqconnect/mapping">
+  <Connection Mode="ConnectionString" ConnectionString="User Id=fhooe;Password=bitnami1;Host=192.168.142.128;Port=3306;Database=fhooe;Persist Security Info=True" Provider="Devart.Data.MySql" />
+  <Table Name="fhooe.appointment" Member="Appointments">
+    <Type Name="Appointment" ed:Guid="2e6de212-300e-46e3-94ef-8c8b11d009b9">
+      <Column Name="ID" Type="System.Int32" AutoSync="OnInsert" DbType="INT(11) NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="11" ed:ValidateRequired="true" ed:Guid="3d3c77e7-b7fd-4b0d-b3f3-6c37ffdda2c3" />
+      <Column Name="semesterNumber" Member="SemesterNumber" Type="System.Int32" DbType="INT(2) NULL" CanBeNull="true" UpdateCheck="Never" Precision="2" ed:ValidateRequired="false" ed:Guid="981699ea-1d91-421f-a6a5-67749317e4e7" />
+      <Column Name="semesterName" Member="SemesterName" Type="System.String" DbType="VARCHAR(20) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="20" Unicode="true" ed:ValidateMaxLength="20" ed:ValidateRequired="false" ed:Guid="ee1c2723-a51a-47e3-9d31-9ce66d8ac117" />
+      <Column Name="beginning" Member="Beginning" Type="System.DateTime" DbType="DATETIME NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="true" ed:Guid="5bda6d52-0570-4711-bd8b-c16bad0d6511" />
+      <Column Name="ending" Member="Ending" Type="System.DateTime" DbType="DATETIME NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="true" ed:Guid="ce76c466-ebdc-4e68-9ebe-235fb3b71c06" />
+      <Column Name="type" Member="Type" Type="System.String" DbType="VARCHAR(50) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="false" ed:Guid="0e3cd45a-8b7a-49fc-a5d8-be8a759b4f7b" />
+      <Column Name="identification" Member="Identification" Type="System.String" DbType="VARCHAR(50) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="false" ed:Guid="94c71e48-e13d-4662-8422-0a82f7da9685" />
+      <Column Name="teacher" Member="Teacher" Type="System.Int32" DbType="INT(11) NULL" CanBeNull="true" UpdateCheck="Never" Precision="11" ed:ValidateRequired="false" ed:Guid="9e53b575-e167-499e-b858-5664200a8abf" />
+      <Column Name="room" Member="Room" Type="System.Int32" DbType="INT(11) NULL" CanBeNull="true" UpdateCheck="Never" Precision="11" ed:ValidateRequired="false" ed:Guid="02b9c4c0-f5f9-4546-b92a-65834a2bb282" />
+      <Column Name="studyProgram" Member="StudyProgram" Type="System.Int32" DbType="INT(11) NULL" CanBeNull="true" UpdateCheck="Never" Precision="11" ed:ValidateRequired="false" ed:Guid="7e3bc544-2cd3-4b9c-accd-53127634486f" />
+      <Association Name="Teacher_Appointment" ed:AssociationGuid="6edb0a6a-e101-4d29-a5b5-1853f7a2ab3f" Member="Teacher1" ed:Guid="b7f7d758-b3af-4ffa-a3cd-901e87892093" ThisKey="Teacher" OtherKey="ID" Type="Teacher" DeleteRule="CASCADE" IsForeignKey="true" />
+      <Association Name="Studyprogram_Appointment" ed:AssociationGuid="bcf6c8e3-3d0a-45cc-be93-18c9604b12ee" Member="Studyprogram" ed:Guid="60e1d3e2-6203-4c50-be84-534eeb14f0fc" ThisKey="StudyProgram" OtherKey="ID" Type="Studyprogram" DeleteRule="CASCADE" IsForeignKey="true" />
+      <Association Name="Room_Appointment" ed:AssociationGuid="60938d7e-16fb-471b-a4f9-3c45bbc3e542" Member="Room1" ed:Guid="7061c91c-20c5-4988-b1b5-08ed5609f720" ThisKey="Room" OtherKey="ID" Type="Room" DeleteRule="CASCADE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="fhooe.person" Member="People">
+    <Type Name="Person" ed:Guid="9ecfa0ce-421c-4b43-ba2b-ab576034de31">
+      <Column Name="personID" Member="PersonID" Type="System.Int32" AutoSync="OnInsert" DbType="INT(11) NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="11" ed:ValidateRequired="true" ed:Guid="d9c13557-c2c2-497a-84d2-45b1c48aa0d8" />
+      <Column Name="Vorname" Type="System.String" DbType="VARCHAR(30) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="30" Unicode="true" ed:ValidateMaxLength="30" ed:ValidateRequired="true" ed:Guid="ef4e4ba9-dfbc-4958-a9f3-f32825e65967" />
+      <Column Name="Nachname" Type="System.String" DbType="VARCHAR(30) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="30" Unicode="true" ed:ValidateMaxLength="30" ed:ValidateRequired="true" ed:Guid="962fae15-ab14-4eee-97b8-6fad7164ef56" />
+      <Column Name="SVNR" Type="System.Int32" DbType="INT(11) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="11" ed:ValidateRequired="true" ed:Guid="de7952f1-2565-4107-aa69-d0e013394ee9" />
+    </Type>
+  </Table>
+  <Table Name="fhooe.room" Member="Rooms">
+    <Type Name="Room" ed:Guid="359f62d9-6f67-45f5-87a4-2d6a3c0fd965">
+      <Column Name="ID" Type="System.Int32" AutoSync="OnInsert" DbType="INT(11) NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="11" ed:ValidateRequired="true" ed:Guid="356ebfea-c8ef-4bb5-aa82-a8b49d4cbedf" />
+      <Column Name="building" Member="Building" Type="System.String" DbType="VARCHAR(10) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="10" Unicode="true" ed:ValidateMaxLength="10" ed:ValidateRequired="true" ed:Guid="23437b00-791e-4635-96fc-34d67577c940" />
+      <Column Name="type" Member="Type" Type="System.String" DbType="VARCHAR(10) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="10" Unicode="true" ed:ValidateMaxLength="10" ed:ValidateRequired="true" ed:Guid="8b8d13ec-0dee-4a04-984d-bf61bf609ce4" />
+      <Column Name="roomName" Member="RoomName" Type="System.String" DbType="VARCHAR(50) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="true" ed:Guid="8cf6224b-10ff-46c3-8866-f1b23466d419" />
+      <Association Name="Room_Appointment" ed:AssociationGuid="60938d7e-16fb-471b-a4f9-3c45bbc3e542" Member="Appointments" ed:Guid="6736c945-f0aa-44cd-bfc5-cdb039c61f8d" ThisKey="ID" OtherKey="Room" Type="Appointment" />
+    </Type>
+  </Table>
+  <Table Name="fhooe.studyprogram" Member="Studyprograms">
+    <Type Name="Studyprogram" ed:Guid="6c7e8c0f-400b-4498-9ea9-c56456875e4d">
+      <Column Name="ID" Type="System.Int32" AutoSync="OnInsert" DbType="INT(11) NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="11" ed:ValidateRequired="true" ed:Guid="938e747b-f03e-42a7-b4c3-dc9a56666657" />
+      <Column Name="programName" Member="ProgramName" Type="System.String" DbType="VARCHAR(50) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="true" ed:Guid="c8a8a6c1-d269-4a76-a6aa-bf3754ea172c" />
+      <Column Name="programNumber" Member="ProgramNumber" Type="System.Int32" DbType="INT(5) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="5" ed:ValidateRequired="true" ed:Guid="0d6ce1d8-1e07-44e0-b48a-0ccf372cf1eb" />
+      <Column Name="programGraduate" Member="ProgramGraduate" Type="System.String" DbType="VARCHAR(20) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="20" Unicode="true" ed:ValidateMaxLength="20" ed:ValidateRequired="false" ed:Guid="8fbd7e42-3889-4bee-8477-5e90f071615c" />
+      <Column Name="programType" Member="ProgramType" Type="System.String" DbType="VARCHAR(50) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="false" ed:Guid="1db1e36d-d3f4-437a-9652-f91aef482b7e" />
+      <Association Name="Studyprogram_Appointment" ed:AssociationGuid="bcf6c8e3-3d0a-45cc-be93-18c9604b12ee" Member="Appointments" ed:Guid="88cdb664-7e36-41aa-a372-45750493ac83" ThisKey="ID" OtherKey="StudyProgram" Type="Appointment" />
+    </Type>
+  </Table>
+  <Table Name="fhooe.teacher" Member="Teachers">
+    <Type Name="Teacher" ed:Guid="78ee0f6a-d907-4a3e-ab49-77df1fd88d30">
+      <Column Name="ID" Type="System.Int32" AutoSync="OnInsert" DbType="INT(11) NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="11" ed:ValidateRequired="true" ed:Guid="7d32c43d-477b-4d8d-b5bc-76085ff17d14" />
+      <Column Name="firstName" Member="FirstName" Type="System.String" DbType="VARCHAR(50) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="true" ed:Guid="a107f082-3a92-4deb-abf5-91db4359568e" />
+      <Column Name="lastName" Member="LastName" Type="System.String" DbType="VARCHAR(50) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="50" Unicode="true" ed:ValidateMaxLength="50" ed:ValidateRequired="true" ed:Guid="c4054c4c-29ab-4dda-b038-04714cc2dada" />
+      <Association Name="Teacher_Appointment" ed:AssociationGuid="6edb0a6a-e101-4d29-a5b5-1853f7a2ab3f" Member="Appointments" ed:Guid="92586680-1068-4780-9850-831f8cd76be2" ThisKey="ID" OtherKey="Teacher" Type="Appointment" />
+    </Type>
+  </Table>
+</Database>
