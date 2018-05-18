@@ -4,6 +4,9 @@ using MySql.Data.MySqlClient;
 using DBA_Projekt.SQL;
 using System.Data;
 using System.Collections.Generic;
+using Devart.Data.Linq;
+
+using FhooeContext;
 
 namespace DBA_Projekt
 {
@@ -19,6 +22,9 @@ namespace DBA_Projekt
     {
         // Establish DB communication (once per Program)
         sqlComunicator fhooeComunicator = new sqlComunicator("192.168.142.128", "fhooe", "fhooe", "bitnami1");
+
+        FhooeContext.FhooeDataContext dbCon = new FhooeContext.FhooeDataContext();
+        
 
         //public Main()
         //{
@@ -124,6 +130,15 @@ namespace DBA_Projekt
             string profLastName = "Zauner";
             profs = fhooeComunicator.executeSqlQuery("SELECT * FROM teacher WHERE " + sqlComunicator.MakeConditions(new string[] { "lastName" }, new string[] { profLastName }, "AND"));
             MessageBox.Show(profs);
+
+            FhooeContext.Teacher zauner = new FhooeContext.Teacher();
+
+            var table = dbCon.GetTable<FhooeContext.Teacher>();
+
+            var query = from teacher in dbCon.GetTable<FhooeContext.Teacher>()
+                        select teacher; 
+                        //where techer.FirstName is "Zauner";
+
         }
 
         private void button3_Click(object sender, System.EventArgs e)

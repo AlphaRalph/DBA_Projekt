@@ -458,6 +458,7 @@
               <Path>9ecfa0ce-421c-4b43-ba2b-ab576034de31</Path>
               <TypeName>EntityDeveloper.Linq.LinqClass</TypeName>
             </Oid>
+            <IsCollapsed>true</IsCollapsed>
             <FixedHeight>35 px</FixedHeight>
           </Model>
           <Model xsi:type="ClassVwModel">
@@ -1063,8 +1064,8 @@
           <ScaleMode>Free</ScaleMode>
           <Scale>0.852052</Scale>
           <Location>
-            <X>26.9936585086037 px</X>
-            <Y>-59.8555036495125 px</Y>
+            <X>-44.5982184055191 px</X>
+            <Y>-22.2991092027596 px</Y>
           </Location>
         </ViewPort>
         <Oid xsi:type="SchemaModelOID">
