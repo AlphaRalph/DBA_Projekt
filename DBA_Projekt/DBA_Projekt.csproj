@@ -61,6 +61,12 @@
   <ItemGroup>
     <Compile Include="Lektor.cs" />
     <Compile Include="Raum.cs" />
+    <Compile Include="Second.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Second.Designer.cs">
+      <DependentUpon>Second.cs</DependentUpon>
+    </Compile>
     <Compile Include="Studiengang.cs" />
     <Compile Include="Termin.cs" />
     <Compile Include="Main.cs">
@@ -83,6 +89,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Second.resx">
+      <DependentUpon>Second.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

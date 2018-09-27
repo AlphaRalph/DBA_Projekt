@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
 using System.Text;
@@ -24,13 +25,17 @@ namespace DBA_Projekt
         private static MySqlConnection connection;
         private static MySqlDataAdapter myda;
         private static BindingSource bindingSource;
-        public List<Termin> termine = new List<Termin>();
-        public List<Raum> rooms = new List<Raum>();
-        public List<Lektor> teachers = new List<Lektor>();
-        public List<Studiengang> studyprogramms = new List<Studiengang>();
+        private static List<Termin> termine = new List<Termin>();
+        private static List<Raum> rooms = new List<Raum>();
+        private static List<Lektor> teachers = new List<Lektor>();
+        private static List<Studiengang> studyprogramms = new List<Studiengang>();
+        
+        private static List<int> cells = new List<int>();
+
         public Main()
         {
             InitializeComponent();
+            comboBox1.SelectedIndex = 0;
             //csv mit Daten Einlesen
             string pfad = @"C:\Users\Alexander\Documents\GitHub\DBA_Projekt\DBA_Projekt\LVA_Liste_veröffentlicht.csv";
             CsvTermineEinlesen(pfad);
@@ -46,84 +51,90 @@ namespace DBA_Projekt
             connection.Open();
 
             // Überprüfung ob sich Daten in der DB befinden
-            string cmd = "SELECT * FROM Appointment WHERE ID != '' ";
+            string cmd = "SELECT COUNT(*) FROM Appointment";
             MySqlCommand cmdIsEmpty = new MySqlCommand(cmd, connection);
-            
-            int j = cmdIsEmpty.ExecuteNonQuery();
-            if (j == 0) { btnReadcsv.Enabled = false; }
+            int count = Convert.ToInt32(cmdIsEmpty.ExecuteScalar());
+            if (count > 0) { BtnReadcsv.Enabled = false; }
+            else { BtnDeleteDataFromDB.Enabled = false; }
 
-            
+            RefreshGrid();
+
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            RefreshGrid();
+        }
+
+        private void btnUpdateDatabase_Click(object sender, EventArgs e)
+        {
             try
             {
-
-                myda.SelectCommand = new MySqlCommand(sqlcmd, connection);
-                //var reader = myda.SelectCommand.ExecuteReader();
-                //while (reader.Read())
-                //{
-                //    string firstname = reader.GetString("firstname");
-                //}
-                DataTable table = new DataTable();
-                myda.Fill(table);
-
-
-                bindingSource.DataSource = table;
+                string insertcmd = "INSERT INTO Appointment (ID,semesterNumber,semesterName,beginning,ending,type,identifikation,teacher,room,studyprogram) VALUES (@ID,@semesterNumber,@semesterName,@beginning,@ending,@type,@identifikation,@teacher,@room,@studyprogram)";
                 
-                dataGridView1.DataSource = bindingSource;
-                string i = dataGridView1.RowCount.ToString();
-                //connection.Close();
-            }
+                MySqlCommand cmdInsert = new MySqlCommand(insertcmd, connection);
+                
+                foreach (var row in cells)
+                {
+                    if (termine.Count <= row)
+                    {
+                        cmdInsert.Parameters.AddWithValue("@ID", dataGridView1.Rows[row].Cells[0].Value);
+                        cmdInsert.Parameters.AddWithValue("@semesterNumber", dataGridView1.Rows[row].Cells[1].Value);
+                        cmdInsert.Parameters.AddWithValue("@semesterName", dataGridView1.Rows[row].Cells[2].Value);
+                        cmdInsert.Parameters.AddWithValue("@beginning", dataGridView1.Rows[row].Cells[3].Value);
+                        cmdInsert.Parameters.AddWithValue("@ending", dataGridView1.Rows[row].Cells[4].Value);
+                        cmdInsert.Parameters.AddWithValue("@type", dataGridView1.Rows[row].Cells[5].Value);
+                        cmdInsert.Parameters.AddWithValue("@identifikation", dataGridView1.Rows[row].Cells[6].Value);
+                        cmdInsert.Parameters.AddWithValue("@teacher", dataGridView1.Rows[row].Cells[7].Value);
+                        cmdInsert.Parameters.AddWithValue("@room", dataGridView1.Rows[row].Cells[8].Value);
+                        cmdInsert.Parameters.AddWithValue("@studyprogram", dataGridView1.Rows[row].Cells[9].Value);
+                        myda.InsertCommand = cmdInsert;
+                    }
+                    else
+                    {
+                        string updatecmd = "UPDATE APPOINTMENT SET semesterNumber = @semesterNumber,semesterName = @semesterName,beginning = @beginning,ending = @ending,type = @type,identifikation = @identifikation,teacher = @teacher,room = @room,studyprogram = @studyprogram WHERE ID = " + (row + 101);
+                        MySqlCommand cmdUpdate = new MySqlCommand(updatecmd, connection);
+                        cmdUpdate.Parameters.AddWithValue("@semesterNumber", dataGridView1.Rows[row].Cells[1].Value);
+                        cmdUpdate.Parameters.AddWithValue("@semesterName", dataGridView1.Rows[row].Cells[2].Value);
+                        cmdUpdate.Parameters.AddWithValue("@beginning", dataGridView1.Rows[row].Cells[3].Value);
+                        cmdUpdate.Parameters.AddWithValue("@ending", dataGridView1.Rows[row].Cells[4].Value);
+                        cmdUpdate.Parameters.AddWithValue("@type", dataGridView1.Rows[row].Cells[5].Value);
+                        cmdUpdate.Parameters.AddWithValue("@identifikation", dataGridView1.Rows[row].Cells[6].Value);
+                        cmdUpdate.Parameters.AddWithValue("@teacher", dataGridView1.Rows[row].Cells[7].Value);
+                        cmdUpdate.Parameters.AddWithValue("@room", dataGridView1.Rows[row].Cells[8].Value);
+                        cmdUpdate.Parameters.AddWithValue("@studyprogram", dataGridView1.Rows[row].Cells[9].Value);
+                        myda.UpdateCommand = cmdUpdate;
+                    }
+                }
+                myda.Update((DataTable)bindingSource.DataSource);
 
+                cells.Clear();
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
 
-        private void btnUpdateDatabase_Click(object sender, EventArgs e)
+        private void BtnReadcsv_Click(object sender, EventArgs e)
         {
-            /*
-       try
-       {
+            try
+            {
+                InsertRooms(rooms);
+                InsertTeacher(teachers);
+                InsertStudyprograms(studyprogramms);
+                InsertAppointments(termine);
 
-           string insertcmd = "INSERT INTO Person (PersonID,Nachname, Vorname,SVNummer) VALUES (@PersonID,@Nachname, @Vorname,@SVNummer)";
-           MySqlCommand cmd = new MySqlCommand(insertcmd, connection);
-           cmd.Parameters.AddWithValue("@PersonID", dataGridView1.Rows[1].Cells[0].Value);
-           cmd.Parameters.AddWithValue("@Nachname", dataGridView1.Rows[1].Cells[1].Value);
-           cmd.Parameters.AddWithValue("@Vorname", dataGridView1.Rows[1].Cells[2].Value);
-           cmd.Parameters.AddWithValue("@SVNummer", dataGridView1.Rows[1].Cells[3].Value);
+                BtnReadcsv.Enabled = false;
+                BtnDeleteDataFromDB.Enabled = true;
 
+                RefreshGrid();
 
-           myda.InsertCommand = cmd;
-           myda.Update((DataTable)bindingSource.DataSource);
-
-       }
-       catch (Exception ex)
-       {
-           MessageBox.Show(ex.ToString());
-       }
-       */
-
-
-        }
-        private void btnReadcsv_Click(object sender, EventArgs e)
-        {
-
-                try
-                {
-                    InsertRooms(rooms);
-                    InsertTeacher(teachers);
-                    InsertStudyprograms(studyprogramms);
-                    InsertAppointments(termine);
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
             
         }
 
@@ -147,11 +158,44 @@ namespace DBA_Projekt
                 MySqlCommand cmdProg = new MySqlCommand(insertcmdProg, connection);
                 cmdProg.ExecuteNonQuery();
 
+                BtnReadcsv.Enabled = true;
+                BtnDeleteDataFromDB.Enabled = false;
+
+                RefreshGrid();
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox1.Text.ToString() != "")
+            {
+                string selectcmd = "SELECT * FROM `appointment` WHERE " + comboBox1.GetItemText(comboBox1.SelectedItem) + " LIKE '" + textBox1.Text.ToString() + "%'";
+                MySqlCommand cmd = new MySqlCommand(selectcmd, connection);
+                myda.SelectCommand = cmd;
+                DataTable table = new DataTable();
+                myda.Fill(table);
+                bindingSource.DataSource = table;
+                dataGridView1.DataSource = bindingSource;
+            }
+            else { RefreshGrid(); }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex == 3 || comboBox1.SelectedIndex == 4)
+            {
+                toolTip1.Show("Bitte wie folgt suchen: YYYY-MM-DD hh:mm:ss", comboBox1);
+            }
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (cells.IndexOf(e.RowIndex) == -1) { cells.Add(e.RowIndex); }
         }
 
         public void CsvTermineEinlesen(string pfad)
@@ -230,6 +274,31 @@ namespace DBA_Projekt
                 }
             }
 
+        }
+
+        private void RefreshGrid()
+        {
+            try
+            {
+                myda.SelectCommand = new MySqlCommand(sqlcmd, connection);
+                
+                DataTable table = new DataTable();
+                myda.Fill(table);
+
+
+                bindingSource.DataSource = table;
+
+                dataGridView1.DataSource = bindingSource;
+                string i = dataGridView1.RowCount.ToString();
+                //connection.Close();
+
+                cells.Clear();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         public static Studiengang CheckExStudyprogram(List<Studiengang> list, Studiengang objekt)
@@ -334,6 +403,16 @@ namespace DBA_Projekt
             }
         }
 
-        
+        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int i = dataGridView1.RowCount;
+            int value = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+            if (e.ColumnIndex >= 7 && e.RowIndex+1 < i)
+            {
+                
+                Second form = new Second(value, e.ColumnIndex);
+                form.Show();
+            }
+        }
     }
 }
