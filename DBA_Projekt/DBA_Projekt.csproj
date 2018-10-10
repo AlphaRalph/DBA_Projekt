@@ -32,13 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Devart.Data, Version=5.0.1704.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="Devart.Data.Linq, Version=4.7.1249.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.MySql, Version=8.9.912.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.MySql.Linq, Version=4.7.1249.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="Devart.Data.SqlServer.Linq, Version=4.7.1249.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data, Version=6.10.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.10.6\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -46,7 +48,6 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Runtime" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,7 +60,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ERM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERM.lqml</DependentUpon>
+    </Compile>
     <Compile Include="Lektor.cs" />
+    <Compile Include="OR_Mapper_Window.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OR_Mapper_Window.Designer.cs">
+      <DependentUpon>OR_Mapper_Window.cs</DependentUpon>
+    </Compile>
     <Compile Include="Raum.cs" />
     <Compile Include="Second.cs">
       <SubType>Form</SubType>
@@ -80,6 +92,9 @@
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OR_Mapper_Window.resx">
+      <DependentUpon>OR_Mapper_Window.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -92,6 +107,16 @@
     <EmbeddedResource Include="Second.resx">
       <DependentUpon>Second.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ERM.Diagram1.view">
+      <DependentUpon>ERM.lqml</DependentUpon>
+    </None>
+    <None Include="ERM.edps">
+      <DependentUpon>ERM.lqml</DependentUpon>
+    </None>
+    <None Include="ERM.lqml">
+      <Generator>DevartLinqToSqlGenerator</Generator>
+      <LastGenOutput>ERM.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -37,7 +37,7 @@ namespace DBA_Projekt
             InitializeComponent();
             comboBox1.SelectedIndex = 0;
             //csv mit Daten Einlesen
-            string pfad = @"C:\Users\Alexander\Documents\GitHub\DBA_Projekt\DBA_Projekt\LVA_Liste_veröffentlicht.csv";
+            string pfad = @"..\..\LVA_Liste_veröffentlicht.csv";
             CsvTermineEinlesen(pfad);
 
             
@@ -413,6 +413,12 @@ namespace DBA_Projekt
                 Second form = new Second(value, e.ColumnIndex);
                 form.Show();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OR_Mapper_Window form = new OR_Mapper_Window(termine, rooms, teachers, studyprogramms);
+            form.Show();
         }
     }
 }

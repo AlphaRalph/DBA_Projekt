@@ -39,6 +39,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +49,7 @@
             this.BtnUpdateDatabase.Location = new System.Drawing.Point(210, 50);
             this.BtnUpdateDatabase.Margin = new System.Windows.Forms.Padding(4);
             this.BtnUpdateDatabase.Name = "BtnUpdateDatabase";
-            this.BtnUpdateDatabase.Size = new System.Drawing.Size(188, 46);
+            this.BtnUpdateDatabase.Size = new System.Drawing.Size(180, 46);
             this.BtnUpdateDatabase.TabIndex = 5;
             this.BtnUpdateDatabase.Text = "UpdateDatabase";
             this.BtnUpdateDatabase.UseVisualStyleBackColor = true;
@@ -78,9 +79,9 @@
             // 
             // BtnReadcsv
             // 
-            this.BtnReadcsv.Location = new System.Drawing.Point(405, 51);
+            this.BtnReadcsv.Location = new System.Drawing.Point(397, 50);
             this.BtnReadcsv.Name = "BtnReadcsv";
-            this.BtnReadcsv.Size = new System.Drawing.Size(163, 46);
+            this.BtnReadcsv.Size = new System.Drawing.Size(180, 46);
             this.BtnReadcsv.TabIndex = 6;
             this.BtnReadcsv.Text = "Load csvToDB";
             this.BtnReadcsv.UseVisualStyleBackColor = true;
@@ -88,7 +89,7 @@
             // 
             // BtnDeleteDataFromDB
             // 
-            this.BtnDeleteDataFromDB.Location = new System.Drawing.Point(575, 51);
+            this.BtnDeleteDataFromDB.Location = new System.Drawing.Point(584, 50);
             this.BtnDeleteDataFromDB.Margin = new System.Windows.Forms.Padding(4);
             this.BtnDeleteDataFromDB.Name = "BtnDeleteDataFromDB";
             this.BtnDeleteDataFromDB.Size = new System.Drawing.Size(180, 46);
@@ -139,9 +140,20 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(23, 415);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(180, 46);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Open OR-Mapper Window";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Main
             // 
-            this.ClientSize = new System.Drawing.Size(1147, 459);
+            this.ClientSize = new System.Drawing.Size(1147, 467);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
@@ -170,6 +182,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Database Name="lva_liste_or_mapper" EntityNamespace="Context" ContextNamespace="Context" Class="DataContext" xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ed:Guid="109969e4-4a19-4252-8d4f-961824b63549" Provider="Devart.Data.MySql.Linq.Provider.MySqlDataProvider, Devart.Data.MySql.Linq" Extended="true" xmlns="http://schemas.devart.com/linqconnect/mapping">
+  <Connection Mode="ConnectionString" ConnectionString="User Id=fhooe;Password=1234;Host=192.168.43.128;Database=lva_liste_or_mapper;Persist Security Info=True" Provider="Devart.Data.MySql" />
+  <Table Name="lva_liste_or_mapper.Appointments" Member="Appointments">
+    <Type Name="Appointment" ed:Guid="a0ca6e9a-13e6-40bb-b834-0bbb6507405b">
+      <Column Name="ID" Type="System.Int32" DbType="int(9) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="9" ed:ValidateRequired="true" ed:Guid="6e60d709-8551-4761-b7f7-28334c344474" />
+      <Column Name="SemsterNumber" Type="System.Int32" DbType="int(9) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="9" ed:ValidateRequired="true" ed:Guid="14a7f6b6-2eee-45a9-90b8-13e66ef6a8b2" />
+      <Column Name="SemesterName" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="4c7070b6-1b46-430c-966b-46dd18d2f450" />
+      <Column Name="Beginning" Type="System.DateTime" DbType="datetime NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="true" ed:Guid="7286cdfd-4005-45d2-9877-22ea083864ae" />
+      <Column Name="Ending" Type="System.DateTime" DbType="datetime NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="true" ed:Guid="00feda24-5273-43ff-9009-a5cc1491fc37" />
+      <Column Name="Type" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="16432d4a-df70-4930-be87-5762c408ed5b" />
+      <Column Name="Identifikation" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="3b2f14b5-f41b-4925-a989-36b43d0d04da" />
+      <Column Name="TeacherID" Type="System.Int32" DbType="int(9) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="9" ed:ValidateRequired="true" ed:Guid="83c1d816-6a4f-4741-aced-3733191d020a" />
+      <Column Name="RoomID" Type="System.Int32" DbType="int(9) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="9" ed:ValidateRequired="true" ed:Guid="b8bcf715-777c-4e29-a27e-f84cf295dfcb" />
+      <Column Name="StudyprogramID" Type="System.Int32" DbType="int(9) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="9" ed:ValidateRequired="true" ed:Guid="5aa39e95-9767-4df9-8865-4a6a4a28699c" />
+      <Association Name="Room_Appointment" ed:AssociationGuid="a55c944e-986b-4af1-ae12-d53293ac81ad" Member="Room" ed:Guid="7b4bd8f8-f024-4699-b8bd-ecaef3812803" AccessModifier="Internal" ThisKey="RoomID" OtherKey="ID" Type="Room" DeleteRule="RESTRICT" IsForeignKey="true" />
+      <Association Name="Studyprogram_Appointment" ed:AssociationGuid="7009903b-96f8-4999-bcfc-82f728f100a5" Member="Studyprogram" ed:Guid="dcedb750-7fe0-4d77-8fd0-78c5fe15dd5c" AccessModifier="Internal" ThisKey="StudyprogramID" OtherKey="ID" Type="Studyprogram" DeleteRule="RESTRICT" IsForeignKey="true" />
+      <Association Name="Teacher_Appointment" ed:AssociationGuid="6ac58e32-a2f9-4496-bc9b-7845e14acf5c" Member="Teacher" ed:Guid="4c035df2-b3f7-4a0b-9059-05dfb499dfb9" AccessModifier="Internal" ThisKey="TeacherID" OtherKey="ID" Type="Teacher" DeleteRule="RESTRICT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="lva_liste_or_mapper.Rooms" Member="Rooms">
+    <Type Name="Room" ed:Guid="0d452ae0-d421-4cbc-a027-be58bb50a7e7">
+      <Column Name="ID" Type="System.Int32" DbType="int(9) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="9" ed:ValidateRequired="true" ed:Guid="6764c093-fe33-4ab6-bb2b-1008f15eda15" />
+      <Column Name="Building" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="16315c01-22ba-422b-87ba-2b91aa288854" />
+      <Column Name="Type" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="00a0dc86-0b09-4f67-9106-ce839e4ca089" />
+      <Column Name="RoomName" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="a3b2ad0c-e414-4b74-bc52-2b2e6d5eda95" />
+    </Type>
+  </Table>
+  <Table Name="lva_liste_or_mapper.Studyprograms" Member="Studyprograms">
+    <Type Name="Studyprogram" ed:Guid="9e1edee8-0285-48f7-9236-76ebd433becb">
+      <Column Name="ID" Type="System.Int32" DbType="int(9) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="9" ed:ValidateRequired="true" ed:Guid="95470923-1847-4cfd-b335-13b06b55c6fd" />
+      <Column Name="ProgramName" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="6b0069b6-0496-47a9-9ba6-bf28ef7324d0" />
+      <Column Name="ProgramNumber" Type="System.Int32" DbType="int(9) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="9" ed:ValidateRequired="true" ed:Guid="a475d107-67b9-40ff-bac8-1b30fb6d5255" />
+      <Column Name="ProgramGraduate" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="65522f1e-cdb8-41f3-9bfb-e260aaffdde6" />
+      <Column Name="ProgramType" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="039f9c18-7abf-446b-87d7-9e025ba7d613" />
+    </Type>
+  </Table>
+  <Table Name="lva_liste_or_mapper.Teachers" Member="Teachers">
+    <Type Name="Teacher" ed:Guid="affb5a96-6537-4b2c-a162-53de3f5069c7">
+      <Column Name="ID" Type="System.Int32" DbType="int(9) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="9" ed:ValidateRequired="true" ed:Guid="43e179e0-707c-4df2-97cc-ceb2d074bfad" />
+      <Column Name="FirstName" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="d81a80c7-bfdb-4a09-a7a8-353d5ca955a7" />
+      <Column Name="LastName" Type="System.String" DbType="longtext NOT NULL" CanBeNull="false" UpdateCheck="Never" Unicode="true" ed:ValidateRequired="true" ed:Guid="abdacb00-807c-48d9-97a1-06b1194f8972" />
+    </Type>
+  </Table>
+</Database>
